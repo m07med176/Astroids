@@ -6,14 +6,16 @@ import com.udacity.asteroidradar.data.api.RetrofitSingltone
 import com.udacity.asteroidradar.data.api.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.data.models.Asteroid
 import com.udacity.asteroidradar.data.models.PictureOfDay
+import com.udacity.asteroidradar.data.room.AsteroidDAO
 import com.udacity.asteroidradar.utils.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.util.ArrayList
 
-class Repository {
+class Repository(private val db: AsteroidDAO){
 
+    // Network
     @RequiresApi(Build.VERSION_CODES.N)
     suspend fun refreshAsteroids(): ArrayList<Asteroid> {
         var asteroids: ArrayList<Asteroid>
@@ -27,4 +29,16 @@ class Repository {
     suspend fun getDayPicture() : PictureOfDay {
         return RetrofitSingltone.networkInterface.getDayPicture().await()
     }
+
+
+    // Room
+    fun getAllAsteroidsData (): List<Asteroid> = db.getAllAsteroidsData()
+
+    fun getAsteroidsByCloseApproachDateRange() : List<Asteroid> =  db.getAsteroidsByCloseApproachDateRange(Utils.getToday(),Utils.getNextWeak())
+
+    fun deleteByDate(){
+        db.deleteByDate(Utils.getToday())
+    }
+
+
 }

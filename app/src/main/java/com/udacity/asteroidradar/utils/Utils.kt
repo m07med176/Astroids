@@ -12,7 +12,7 @@ class Utils {
 
 
         @RequiresApi(Build.VERSION_CODES.N)
-        private fun getNextWeak(): String {
+        fun getNextWeak(): String {
             Calendar.getInstance().apply {
                 add(Calendar.DAY_OF_YEAR, 7)
                 return formatDate(this.time)
