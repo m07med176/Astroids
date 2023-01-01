@@ -24,4 +24,6 @@ object RetrofitSingltone {
         .client(client)
         .build()
 
+    val networkInterface: WebServiceApi = retrofit.create(WebServiceApi::class.java)
+
 }
