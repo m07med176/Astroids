@@ -1,6 +1,6 @@
-package com.udacity.asteroidradar.api
+package com.udacity.asteroidradar.data.api
 
-import com.udacity.asteroidradar.models.PictureOfDay
+import com.udacity.asteroidradar.data.models.PictureOfDay
 import com.udacity.asteroidradar.utils.Constants
 import kotlinx.coroutines.Deferred
 import okhttp3.ResponseBody
