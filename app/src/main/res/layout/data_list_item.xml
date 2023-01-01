@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="asteroid"
+            type="com.udacity.asteroidradar.Asteroid" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:gravity="center"
+        tools:background="@color/app_background">
+
+        <ImageView
+            android:layout_margin="5dp"
+            android:id="@+id/isHazardous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:statusIcon="@{asteroid.potentiallyHazardous}"
+            tools:src="@drawable/ic_status_potentially_hazardous" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/itemFontStyle"
+            android:text="@{asteroid.codename}"
+            tools:text="Test" />
+
+        <TextView
+            android:id="@+id/approach_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{asteroid.closeApproachDate}"
+            style="@style/itemFontStyle"
+            tools:text="2022-12-05" />
+
+
+    </LinearLayout>
+</layout>
