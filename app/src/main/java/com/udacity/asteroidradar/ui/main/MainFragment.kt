@@ -1,12 +1,16 @@
 package com.udacity.asteroidradar.ui.main
 
+import android.os.Build
 import android.os.Bundle
 import android.view.*
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.udacity.asteroid.ui.main.MainViewModel
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 
+@RequiresApi(Build.VERSION_CODES.N)
 class MainFragment : Fragment() {
 
     private val viewModel: MainViewModel by lazy {
