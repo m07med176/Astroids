@@ -2,9 +2,7 @@ package com.udacity.asteroidradar.ui.detail
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.udacity.asteroidradar.R
@@ -32,5 +30,28 @@ class DetailFragment : Fragment() {
             .setMessage(getString(R.string.astronomica_unit_explanation))
             .setPositiveButton(android.R.string.ok, null)
         builder.create().show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_overflow_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.show_today -> {
+                adapter.submitList(adapter.currentList.filter {
+                    it.closeApproachDate == viewModel.getToday()
+                })
+            }
+            R.id.show_next_week -> {
+                adapter.submitList(viewModel.asteroids.value)
+            }
+            R.id.show_all->{
+                adapter.submitList(viewModel.allAsteroids.value)
+            }
+            else -> return true
+        }
+        return true
     }
 }
