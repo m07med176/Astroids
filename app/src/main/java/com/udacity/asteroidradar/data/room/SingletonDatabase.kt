@@ -9,6 +9,7 @@ import com.udacity.asteroidradar.data.models.Asteroid
 
 @Database(entities = [Asteroid::class ], version = 2 , exportSchema = false)
 abstract class SingletonDatabase : RoomDatabase() {
+    abstract val asteroidDao: AsteroidDAO
     companion object {
         @Volatile
         private lateinit var INSTANCE: SingletonDatabase
