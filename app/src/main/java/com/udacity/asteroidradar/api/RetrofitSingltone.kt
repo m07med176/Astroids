@@ -18,7 +18,7 @@ object RetrofitSingltone {
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl(Constants.NASA_API_BASE_URL)
+        .baseUrl(Constants.BASE_URL)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .client(client)
