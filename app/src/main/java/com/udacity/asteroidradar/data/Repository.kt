@@ -26,6 +26,12 @@ class Repository(private val db: AsteroidDAO){
         return asteroids
     }
 
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun deleteOutDatedAsteroids(){
+        db.deleteByDate(Utils.getToday())
+    }
+
     suspend fun getDayPicture() : PictureOfDay {
         return RetrofitSingltone.networkInterface.getDayPicture().await()
     }
@@ -36,6 +42,7 @@ class Repository(private val db: AsteroidDAO){
 
     fun getAsteroidsByCloseApproachDateRange() : List<Asteroid> =  db.getAsteroidsByCloseApproachDateRange(Utils.getToday(),Utils.getNextWeak())
 
+    @RequiresApi(Build.VERSION_CODES.N)
     fun deleteByDate(){
         db.deleteByDate(Utils.getToday())
     }
