@@ -19,20 +19,23 @@ class MainViewModel(
     private val repository: Repository
 ) : ViewModel() {
 
+    // region Asteroid Items
     private val _asteroids = MutableLiveData<List<Asteroid>>()
     val asteroids:LiveData<List<Asteroid>>
         get() = _asteroids
 
-    private val _allAsteroids = MutableLiveData<List<Asteroid>>()
-    val allAsteroids:LiveData<List<Asteroid>>
-        get() = _allAsteroids
+    private val _allAsteroidsItems = MutableLiveData<List<Asteroid>>()
+    val allAsteroidsItems:LiveData<List<Asteroid>>
+        get() = _allAsteroidsItems
+    // endregion Asteroid Items
 
+    // region Picture
     private val _picture = MutableLiveData<PictureOfDay>()
     val picture:LiveData<PictureOfDay>
         get() = _picture
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun getAsteroids() = viewModelScope.launch(Dispatchers.IO){
+    private fun getAllAsteroids() = viewModelScope.launch(Dispatchers.IO){
         var asteroids = repository.getAllAsteroidsData()
         var allAsteroids = repository.getAllAsteroidsData()
         if (asteroids.isEmpty()){
@@ -44,47 +47,50 @@ class MainViewModel(
             _asteroids.postValue(it)
         }
         allAsteroids?.let {
-            _allAsteroids.postValue(it)
+            _allAsteroidsItems.postValue(it)
         }
         _loading.postValue(false)
     }
 
-
-
-    private fun getTodayPicture() = viewModelScope.launch(Dispatchers.IO){
+    private fun getCurrentPic() = viewModelScope.launch(Dispatchers.IO){
         val picture = repository.getDayPicture()
         picture?.let {it->
-        _picture.postValue(it)
+            _picture.postValue(it)
         }
     }
-
-    private val _loading = MutableLiveData<Boolean>()
-    val loading:LiveData<Boolean>
-        get() = _loading
+    // endregion Picture
 
     init {
         viewModelScope.launch (Dispatchers.Default){
             _loading.postValue(true)
             withContext(Dispatchers.IO) {
-                getTodayPicture()
+                getCurrentPic()
             }
             viewModelScope.launch{
-                getAsteroids()
+                getAllAsteroids()
             }
         }
     }
 
-    private val _navigateToAsteroidDetail:MutableLiveData<Asteroid>? = MutableLiveData<Asteroid>()
-    val navigateToAsteroidDetail
-        get() = _navigateToAsteroidDetail
+    // region Loading
+    private val _loading = MutableLiveData<Boolean>()
+    val loading:LiveData<Boolean>
+        get() = _loading
+    // endregion Loading
 
-    fun onAsteroidClicked(asteroid: Asteroid){
-        _navigateToAsteroidDetail!!.value = asteroid
+    // region Navigation
+    private val _navigateToFragmentDetails:MutableLiveData<Asteroid>? = MutableLiveData<Asteroid>()
+    val fragmentDetailsNavigate
+        get() = _navigateToFragmentDetails
+
+    fun onItemClicked(asteroid: Asteroid){
+        _navigateToFragmentDetails!!.value = asteroid
     }
 
-    fun onAsteroidDetailNavigated() {
-        _navigateToAsteroidDetail!!.value = null
+    fun navigateToFragmentDetails() {
+        _navigateToFragmentDetails!!.value = null
     }
+    // endregion Navigation
 
     fun getToday():String = Utils.getToday()
 }
